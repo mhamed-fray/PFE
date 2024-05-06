@@ -1,0 +1,129 @@
+{% load i18n static admin_berry %}
+
+<!-- [ Sidebar Menu ] start -->
+<nav class="pc-sidebar">
+  <div class="navbar-wrapper">
+    <div class="m-header">
+
+
+
+
+
+
+      
+        <!-- ========   Change your logo from here   ============ -->
+      </a>
+    </div>
+    <div class="navbar-content">
+      <ul class="pc-navbar">
+        <li class="pc-item pc-caption">
+          <label>Tableau de bord</label>
+        
+          <i class="ti ti-dashboard"></i>
+        </li>
+        
+        <li class="pc-item">
+          {% if request.user.is_superuser %}
+          <a href="{% url 'admin:index' %}" class="pc-link">
+          {% else %}
+          <a href="/" class="pc-link">
+          {% endif %}
+            <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+            <span class="pc-mtext">Tableau de bord</span></a>
+        </li>
+
+        {% admin_get_menu as app_list %}
+        {% if app_list %}
+          {% for app in app_list %}
+            {% if app.has_perms and not app.pinned %}
+            <li class="pc-item pc-hasmenu">
+              <a href="#!" class="pc-link">
+                <span class="pc-micon"><i class="ti {{app.icon}}"></i></span>
+                <span class="pc-mtext">{{ app.label|slice:15 }}{% if app.label|length > 15 %}..{% endif %}</span>
+                <span class="pc-arrow"><i class="ti ti-chevron-right"></i></span>
+              </a>
+              {% if app.models %}
+                <ul class="pc-submenu">
+                  {% for model in app.models %}
+                  {% if model.url %}
+                  <li class="pc-item">
+                    <a class="pc-link" href="{{ model.url }}">
+                      {{ model.label }}
+                    </a>
+                  </li>
+                  {% else %}
+                  <li class="pc-item">{{ model.label }}</li>
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+
+        
+        <li class="pc-item pc-caption">
+          <label>Utilisateurs</label>
+          <i class="ti ti-news"></i>
+        </li>
+        <li class="pc-item pc-hasmenu">
+          <a href="#!" class="pc-link"><span class="pc-micon"><i class="ti ti-key"></i></span><span
+              class="pc-mtext"> S'identifier</span><span class="pc-arrow"><i class="ti ti-chevron-right"></i></span></a>
+          <ul class="pc-submenu">
+            {% if request.user.is_superuser %}
+              <li class="pc-item"><a class="pc-link" href="{% url 'admin:password_change' %}"> Changer de mot de passe</a></li>
+              <li class="pc-item"><a class="pc-link" href="{% url 'admin:logout' %}">Déconnexion</a></li>
+            {% else %}
+              {% if request.user.is_authenticated %}
+              <li class="pc-item"><a class="pc-link" href="{% url 'password_change' %}"> Changer de mot de passe</a></li>
+              <li class="pc-item"><a class="pc-link" href="{% url 'logout' %}">Déconnexion</a></li>
+              {% else %}
+              <li class="pc-item"><a class="pc-link" href="{% url 'login' %}">Login</a></li>
+              <li class="pc-item"><a class="pc-link" href="{% url 'register' %}">Register</a></li>
+              {% endif %}
+            {% endif %}
+          </ul>
+        </li>
+        <li class="pc-item pc-caption">
+          <label>Modelisation</label>
+          <i class="ti ti-dashboard"></i>
+        </li>
+        <li class="pc-item pc-hasmenu">
+          <a href="#!" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-chart-dots"></i></span>
+            <span class="pc-mtext">Modele</span>
+            <span class="pc-arrow"><i class="ti ti-chevron-right"></i></span>
+          </a>
+          <ul class="pc-submenu">
+            <!-- Insérez ici les éléments spécifiques à votre menu "Modele" -->
+            <li class="pc-item"><a class="pc-link" href="{% url 'sample_page' %}">Statistiques</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url 'predict_sales' %}">Ventes prédiction</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url 'sales_prediction_interface' %}">Récapitulatif Mensuel des Ventes Boutiques</a></li>
+            
+
+
+          </ul>
+        </li>
+        
+            {% if request.user.is_superuser %}
+              
+            {% else %}
+              {% if request.user.is_authenticated %}
+              
+              {% else %}
+              
+              {% endif %}
+            {% endif %}
+          </ul>
+        </li>
+        
+      
+        
+        
+        
+    </div>
+    
+  </div>
+</nav>
+<!-- [ Sidebar Menu ] end -->

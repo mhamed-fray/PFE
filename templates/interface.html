@@ -1,0 +1,48 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %} Dashboard {% endblock title %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  
+  <!-- [ Main Content ] start -->
+  
+</head>
+<body>
+    <div class="pc-container">
+        <div class="pc-content">
+          <!-- [ Main Content ] start -->
+          <div class="row justify-content-center">
+            <div class="col-12 text-center">
+                <h1 class="center-title" style="color:rgb(44, 44, 90); font-weight: 700;">
+                    <i class="fas fa-store"></i> Récapitulatif Mensuel des Ventes Boutiques
+                </h1>
+            </div>
+            <div class="col-12">
+                <p style="color:rgb(51, 51, 83); font-weight: 700;">
+                    <!-- Contenu de votre paragraphe -->
+                </p>
+            </div>
+        </div>
+            <form method="post">
+                {% csrf_token %}
+                {% for month in months %}
+                <div class="form-group">
+                    <label for="month_{{ month }}">Ventes du mois {{ month }}</label>
+                    <input type="number" name="month_{{ month }}" id="month_{{ month }}" class="form-control" required placeholder="Entrez les ventes pour le mois {{ month }}">
+                </div>
+                
+                {% endfor %}
+
+                
+                <button type="submit" class="btn btn-primary btn-lg btn-block"> Prédire les ventes</button>
+            </form>
+          </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock content %}

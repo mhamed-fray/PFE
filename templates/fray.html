@@ -1,0 +1,66 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %} Sample Page {% endblock title %}
+
+{% block content %}
+<!-- Votre code HTML commence ici -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home page</title>
+  <script src="https://kit.fontawesome.com/47101d2035.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <style>
+    /* CSS pour centrer le titre */
+    .center-title {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="pc-container">
+    <div class="pc-content">
+      <!-- Titre centré -->
+      <h1 class="center-title" style="color:rgb(44, 44, 90); font-weight: 700;">
+        <i class="fas fa-ship"></i> Ventes prédiction pour 2023
+      </h1>
+      <p style="color:rgb(51, 51, 83); font-weight: 700;">
+        Entrer le mois pour les Ventes
+      </p>
+
+      <form action="{% url 'result' %}" method="GET">
+        {% csrf_token %}
+        <div class="form-group">
+          <input class="form-control" placeholder="MOIS" required type="text" name="mois">
+        </div>
+        
+        <div class="form-group">
+          <input class="form-control" placeholder="BOUTIQUES(1,2,3)" required type="text" name="boutique">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="NOUVEAU MARQUE(1,0)" required type="text" name="BB">
+        </div>
+       
+        
+        <input class="btn btn-primary btn-lg btn-block" type="submit" value='Predict'>
+        
+      </form>
+      {% if result %}
+      <div style="font-size: 20px;"> <!-- Augmenter la taille du texte -->
+          <p>Résultat de la prédiction pour le mois {{ mois }} : <strong>{{ result }}</strong></p> <!-- Mettre le résultat en gras -->
+      </div>
+      {% endif %}
+      
+  </div>
+</body>
+
+</html>
+<!-- Votre code HTML se termine ici -->
+{% endblock content %}
+  
